@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Vehicle Collisions Dashboard - Final Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .team {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            font-size: 1.8rem;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .tech-item {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .video-container {
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+        }
+        
+        .dashboard-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .preview-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #3498db;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #2c3e50;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NYC Vehicle Collisions Analysis Dashboard</h1>
+            <p class="subtitle">Interactive Temporal Visualization & Analysis Project</p>
+            <div class="team">
+                <p><strong>Team Members:</strong> Sameer Ahmed 2022527</p>
+                <p><strong>Course:</strong> Data Visualization | <strong>Due:</strong> December 21, 2025</p>
+            </div>
+        </header>
+        
+        <section id="project-description">
+            <h2>📊 Project Description</h2>
+            <div class="card">
+                <p>This project is an interactive web dashboard for analyzing motor vehicle collisions in New York City. The dashboard provides temporal visualizations of accident patterns, allowing users to explore:</p>
+                <ul style="margin: 15px 0 15px 25px;">
+                    <li>Collision trends over time (daily, hourly patterns)</li>
+                    <li>Geographic hotspots of injuries and fatalities</li>
+                    <li>Contributing factors analysis (Vehicle 1 & 2 factors)</li>
+                    <li>Interactive filtering by injury severity, time of day, and location</li>
+                </ul>
+                <p>The dashboard transforms raw NYC collision data into actionable insights for urban planning, traffic management, and public safety initiatives.</p>
+            </div>
+        </section>
+        
+        <section id="dataset">
+            <h2>📁 Dataset Description</h2>
+            <div class="card">
+                <h3>NYC Motor Vehicle Collisions - Crashes</h3>
+                <p><strong>Source:</strong> NYC Open Data Portal</p>
+                <p><strong>Time Period:</strong> 2012-2024</p>
+                <p><strong>Size:</strong> 800000+ records with 17+ features</p>
+                <p><strong>Key Features:</strong></p>
+                <ul style="margin: 15px 0 15px 25px;">
+                    <li><strong>Temporal Data:</strong> Crash dates and times for time-series analysis</li>
+                    <li><strong>Geographic Data:</strong> Latitude/Longitude coordinates for mapping</li>
+                    <li><strong>Injury Metrics:</strong> Persons injured, pedestrians/cyclists/motorists affected</li>
+                    <li><strong>Contributing Factors:</strong> Primary and secondary contributing factors</li>
+                    <li><strong>Location Details:</strong> Borough, street names, ZIP codes</li>
+                </ul>
+                <p>The dataset is updated regularly by the NYPD and provides comprehensive coverage of reported collisions across all five boroughs.</p>
+            </div>
+        </section>
+        
+        <section id="tools">
+            <h2>🛠️ Tools & Technologies Used</h2>
+            <div class="card">
+                <div class="tech-stack">
+                    <span class="tech-item">Python 3.12</span>
+                    <span class="tech-item">Streamlit</span>
+                    <span class="tech-item">Pandas</span>
+                    <span class="tech-item">Plotly</span>
+                    <span class="tech-item">NumPy</span>
+                    <span class="tech-item">Git & GitHub</span>
+                    <span class="tech-item">HTML5/CSS3</span>
+                    <span class="tech-item">GitHub Pages</span>
+                </div>
+                <p style="margin-top: 20px;"><strong>Development Environment:</strong> Pop!_OS (Linux), Visual Studio Code, Virtual Environment</p>
+                <p><strong>Key Libraries:</strong> Streamlit for interactive dashboard, Plotly for advanced visualizations, Pandas for data manipulation</p>
+            </div>
+        </section>
+        
+        <section id="dashboard-preview">
+            <h2>📈 Dashboard Features</h2>
+            <div class="dashboard-preview">
+                <div class="card">
+                    <h3>1. Temporal Analysis</h3>
+                    <p>Line charts showing collision trends over time with interactive date ranges</p>
+                </div>
+                <div class="card">
+                    <h3>2. Geographic Visualization</h3>
+                    <p>Interactive maps showing injury hotspots with severity filters</p>
+                </div>
+                <div class="card">
+                    <h3>3. Factor Analysis</h3>
+                    <p>Analysis of contributing factors from primary and secondary vehicles</p>
+                </div>
+                <div class="card">
+                    <h3>4. Hourly Patterns</h3>
+                    <p>Bar charts showing collision distribution by hour of day</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="links">
+            <h2>🔗 Project Links</h2>
+            <div class="card">
+                <a href="https://github.com/YOUR-USERNAME/motor-vehicle-collisions" class="btn" target="_blank">
+                    📂 View Source Code on GitHub
+                </a>
+                <a href="https://github.com/YOUR-USERNAME/motor-vehicle-collisions/blob/main/app.py" class="btn" target="_blank">
+                    🐍 View Main Dashboard Code (app.py)
+                </a>
+                <a href="https://raw.githubusercontent.com/YOUR-USERNAME/motor-vehicle-collisions/main/Motor_Vehicle_Collisions_-_Crashes.csv" class="btn" target="_blank">
+                    📊 Download Sample Dataset
+                </a>
+            </div>
+            <p style="margin-top: 15px;"><strong>Repository Structure:</strong></p>
+            <pre style="background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto;">
+motor-vehicle-collisions/
+├── app.py                    # Main Streamlit dashboard application
+├── requirements.txt          # Python dependencies
+├── Motor_Vehicle_Collisions_-_Crashes.csv  # Dataset
+├── README.md                 # Project documentation
+└── venv/                    # Virtual environment (gitignored)
+            </pre>
+        </section>
+        
+        <section id="video">
+            <h2>🎥 Video Walkthrough</h2>
+            <div class="card">
+                <p><strong>Video Demonstration Requirements:</strong></p>
+                <ul style="margin: 15px 0 15px 25px;">
+                    <li>No formal presentation/speech needed</li>
+                    <li>Clearly show dashboard functionality</li>
+                    <li>Demonstrate all interactive features</li>
+                    <li>Show temporal visualizations in action</li>
+                    <li>2-3 minutes recommended length</li>
+                </ul>
+                
+                <div class="video-container">
+                    <!-- Replace with your actual video -->
+                    <video controls poster="dashboard-thumbnail.jpg">
+                        <source src="dashboard-demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <p style="margin-top: 15px; font-style: italic;">
+                    <strong>Note:</strong> Upload your recorded video to YouTube (unlisted) or include directly in repository, 
+                    then update the video source above.
+                </p>
+            </div>
+        </section>
+        
+        <section id="setup">
+            <h2>⚡ Quick Setup Instructions</h2>
+            <div class="card">
+                <pre style="background: #2c3e50; color: white; padding: 20px; border-radius: 10px; overflow-x: auto;">
+# 1. Clone the repository
+git clone https://github.com/YOUR-USERNAME/motor-vehicle-collisions.git
+cd motor-vehicle-collisions
+
+# 2. Create virtual environment (Linux/Mac)
+python3 -m venv venv
+source venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Run the dashboard
+streamlit run app.py
+
+# 5. Open browser to: http://localhost:8501
+                </pre>
+                <p style="margin-top: 15px;"><strong>Requirements:</strong> Python 3.8+, 4GB RAM, modern web browser</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p>🎓 Final Project Submission | Data Visualization Course | December 2025</p>
+            <p>Created with Python, Streamlit, and Plotly | Deployed via GitHub Pages</p>
+            <p style="margin-top: 15px; opacity: 0.8;">
+                Submission Deadline: December 21, 2025 | Presentations: December 22, 2025
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
